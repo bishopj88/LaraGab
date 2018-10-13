@@ -93,7 +93,7 @@ First create a link allowing you to authorize the app with your Gab account (you
 ```php
 Route::get('/gab/login', function()
 {
-    $gab = new \LaraGabai;
+    $gab = new \LaraGab;
     echo $gab::generateLoginURL(
         Config::get('laragabai.gab_clientID'),
         Config::get('laragabai.gab_redirect_uri'),
@@ -107,7 +107,7 @@ Route::get('/gab/callback', function()
 {
     $code = Request::query('code');
     
-    $gab = new \LaraGabai;
+    $gab = new \LaraGab;
     echo $gab::get_access_token( $code );
 });
 ```
