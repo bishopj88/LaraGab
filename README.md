@@ -3,7 +3,7 @@
 # LaraGab - Gab Laravel API package [![Gab](https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Gab_text_logo.svg/30px-Gab_text_logo.svg.png )](https://v2.gab.ai/Pynex)
 Gab API for Laravel 5
 
-Before you can utilise this API you need to have an developer account (which requires a Pro account), click [**here**](https://v2.gab.ai/settings/clients) to go to your settings.
+Before you can utilise this API you need to have a developer account (which requires a Pro account), click [**here**](https://v2.gab.ai/settings/clients) to go to your settings.
 
 ## Installation
 First add `bishopj88/laragab` to `composer.json`.
