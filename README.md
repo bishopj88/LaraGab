@@ -8,7 +8,7 @@ Before you can utilise this API you need to have an developer account (which req
 ## Installation
 First add `bishopj88/laragab` to `composer.json`.
 ```
-"bishopj88/laragab": "~1.0"
+"bishopj88/laragab": "dev-master"
 ```
 Run `composer update` to pull down the latest version of LaraGab.
 Or run
