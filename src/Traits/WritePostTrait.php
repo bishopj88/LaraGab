@@ -32,7 +32,14 @@ Trait WritePostTrait {
                     
                     $parameter_value = $base64;
                 }
-                array_push( $formattedPost, "Content-Disposition: form-data;name=\"{$parameter_key}\"\r\n\r\n{$parameter_value}\r\n------WebKitFormBoundary7MA4YWxkTrZu0gW\r\nContent-Disposition: form-data;");
+				
+				if( $parameter_key == "media_attachments[]" && is_array($parameter_value) ){
+					foreach( $parameter_value as $attachment ){
+						array_push( $formattedPost, "Content-Disposition: form-data;name=\"{$parameter_key}\"\r\n\r\n{$attachment->id}\r\n------WebKitFormBoundary7MA4YWxkTrZu0gW\r\nContent-Disposition: form-data;");
+					}
+				} else {
+					array_push( $formattedPost, "Content-Disposition: form-data;name=\"{$parameter_key}\"\r\n\r\n{$parameter_value}\r\n------WebKitFormBoundary7MA4YWxkTrZu0gW\r\nContent-Disposition: form-data;");	
+				}
             }
         }
         array_push( $formattedPost, '--');

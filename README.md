@@ -3,12 +3,12 @@
 # LaraGab - Gab Laravel API package [![Gab](https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Gab_text_logo.svg/30px-Gab_text_logo.svg.png )](https://v2.gab.ai/Pynex)
 Gab API for Laravel 5
 
-Before you can utilise this API you need to have a developer account (which requires a Pro account), click [**here**](https://v2.gab.ai/settings/clients) to go to your settings.
+Before you can utilise this API you need to have an developer account (which requires a Pro account), click [**here**](https://v2.gab.ai/settings/clients) to go to your settings.
 
 ## Installation
 First add `bishopj88/laragab` to `composer.json`.
 ```
-"bishopj88/laragab": "dev-master"
+"bishopj88/laragab": "~1.0"
 ```
 Run `composer update` to pull down the latest version of LaraGab.
 Or run
@@ -53,6 +53,9 @@ LARAGAB_REFRESH_TOKEN=
 * `generateLoginURL( $client_id, $redirect_uri, $scope, $html = 0)` - Generates a URL that can be used to authenticate.
 * `get_access_token( $code )` - Retrieving the access tokens.
 
+### Helpers
+* `outputAsArray( $output = false )` - Allows the user to work with the output as an array.
+
 ### Engage Posts
 * `postUpvote( ['postID' => ''] )` - Upvotes given post.
 * `removeUpvote( ['postID' => ''] )` - Removes the upvote for given post.
@@ -93,7 +96,7 @@ First create a link allowing you to authorize the app with your Gab account (you
 ```php
 Route::get('/gab/login', function()
 {
-    $gab = new \LaraGab;
+    $gab = new \LaraGabai;
     echo $gab::generateLoginURL(
         Config::get('laragabai.gab_clientID'),
         Config::get('laragabai.gab_redirect_uri'),
@@ -107,7 +110,7 @@ Route::get('/gab/callback', function()
 {
     $code = Request::query('code');
     
-    $gab = new \LaraGab;
+    $gab = new \LaraGabai;
     echo $gab::get_access_token( $code );
 });
 ```
@@ -124,6 +127,32 @@ Route::get('/gab/fun', function()
     echo $gab::createMediaAttachment(['file' => public_path() . '/photo_2018-07-30_21-03-33.jpg']);
     // Returns your own account details
     echo $gab::getMe();
+});
+```
+
+After finding a flaw with multiple image uploads, I've fixed it and provided a working example:
+```php
+Route::get('/gab/multiple-image', function()
+{
+    $pictures = ['image1.jpg', 'image2.jpg'];
+    $uploaded = [];
+    
+    $gab = new \LaraGab;
+    
+    foreach( $pictures as $picture ){
+        try{
+            array_push($uploaded, $gab::createMediaAttachment( ['file' => $picture] ) );
+        } catch (\Exception $e) {
+            dd($e);
+        }
+    }
+    
+    $post = [
+        'body' => 'Testing multiple file uploads',
+        'media_attachments[]' => $uploaded
+    ];
+    
+    $gab::createPost( $post );
 });
 ```
 

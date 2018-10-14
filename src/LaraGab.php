@@ -13,6 +13,7 @@ use BishopJ88\LaraGab\Traits\NotificationsTrait;
 use BishopJ88\LaraGab\Traits\EngageUserTrait;
 use BishopJ88\LaraGab\Traits\EngagePostTrait;
 use BishopJ88\LaraGab\Traits\WritePostTrait;
+use BishopJ88\LaraGab\Traits\HelperTrait;
 
  /**
   * LaraGab - Gab Laravel API package.
@@ -39,12 +40,13 @@ class LaraGab
         NotificationsTrait,
         EngageUserTrait,
         WritePostTrait,
+		HelperTrait,
         EngagePostTrait;
     
     private $access_token;
     
-    public function __construct(){
-        
+    function __construct(){
+			       
 		// Check for the existence of a config file
         if ( Config::has('laragab') )
 		{
@@ -61,7 +63,7 @@ class LaraGab
             throw new Exception('No LaraGab Config File found!');
         }
     }
-    
+	   
 	public function get( $call, $parameters = [] )
 	{
 		return $this->query( $call, 'GET', $parameters );
@@ -78,7 +80,7 @@ class LaraGab
 	}
     
     public function query( $call, $requestMethod = 'GET', $parameters = [] ){
-        
+					       
 		$headers = array("Authorization: Bearer " . $this->access_token);
 		if( !is_array($parameters) ){
 			$headers = array(
@@ -110,7 +112,7 @@ class LaraGab
         if ($err) {
             throw new Exception('cURL Error #:" . $err');
         } else {
-            return $response;
+            return json_decode($response, self::$output);
         }
     }  
 }
