@@ -98,9 +98,9 @@ Route::get('/gab/login', function()
 {
     $gab = new \LaraGab;
     echo $gab::generateLoginURL(
-        Config::get('laragabai.gab_clientID'),
-        Config::get('laragabai.gab_redirect_uri'),
-        Config::get('laragabai.gab_scope'),
+        Config::get('laragab.gab_clientID'),
+        Config::get('laragab.gab_redirect_uri'),
+        Config::get('laragab.gab_scope'),
         1);
 });
 ```
